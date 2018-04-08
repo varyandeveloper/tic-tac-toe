@@ -82,4 +82,32 @@ class TicTacToeServiceTest extends TestCase
         $this->assertCount(1, $response);
         $this->assertEquals($response[0], 'The winner is ' . MoveService::BOT_UNIT);
     }
+
+    public function testBestMove()
+    {
+        $state = EMPTY_BOARD;
+
+        $state[1][2] = MoveService::PLAYER_UNIT;
+        $res = $this->moveService->makeMove($state);
+        $state[$res[0]][$res[1]] = $res[2];
+        $this->assertEquals([0, 2, MoveService::BOT_UNIT], $res);
+
+        $state[2][0] = MoveService::PLAYER_UNIT;
+        $res = $this->moveService->makeMove($state);
+        $state[$res[0]][$res[1]] = $res[2];
+        $this->assertEquals([0, 0, MoveService::BOT_UNIT], $res);
+
+        $state[0][1] = MoveService::PLAYER_UNIT;
+        $res = $this->moveService->makeMove($state);
+        $state[$res[0]][$res[1]] = $res[2];
+        $this->assertEquals([1, 1, MoveService::BOT_UNIT], $res);
+
+        $state[2][2] = MoveService::PLAYER_UNIT;
+        $res = $this->moveService->makeMove($state);
+        $state[$res[0]][$res[1]] = $res[2];
+        $this->assertEquals([2, 1, MoveService::BOT_UNIT], $res);
+
+        $state[1][0] = MoveService::PLAYER_UNIT;
+        $this->assertEquals($this->moveService->makeMove($state), [MoveService::STALEMATE_MESSAGE]);
+    }
 }

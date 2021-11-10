@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// just a commit
+
 define('EMPTY_BOARD', [
     ['','',''],
     ['','',''],
